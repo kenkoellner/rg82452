@@ -18,17 +18,40 @@
 
       // Send action off to be executed
       $A.enqueueAction(action);
-    },
-
-
-    clickCreateCampingItem: function(component, event, helper) {
-        if(helper.validateCampingItemForm(component)){
-            // Create the new expense
-            var newItem = component.get("v.newItem");
-            helper.createItem (component, newItem);
-        }
     }
+
+,   
+    /*
+    handleAddItem: function(component, event, helper) {
+        var item = event.getParam("item");
+        helper.addItem(component, item);
+    }
+    */
     
+    handleAddItem: function(component, event, helper) {
+        var newItem = event.getParam("item");
+        var action = component.get("c.saveItem");
+        action.setParams({
+            "item": newItem
+        });
+        action.setCallback(this, function(response){
+          var state = response.getState();
+          if (component.isValid() && state === "SUCCESS") {
+              var items = component.get("v.items");            
+              items.push(response.getReturnValue());
+              component.set("v.items", items);
+          } else {
+            console.log("Failed with state: " + state);
+            var myErrors = response.getError();
+            if (myErrors[0] && myErrors[0].message) {
+                    console.log("Error message: " +   myErrors[0].message);
+            }
+          }
+        });
+      $A.enqueueAction(action);   
+    }
+
+
     /*    
     clickCreateCampingItem: function(component, event, helper) {
 
