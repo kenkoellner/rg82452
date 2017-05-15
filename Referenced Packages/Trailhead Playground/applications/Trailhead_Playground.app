@@ -18,4 +18,5 @@
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
     <tab>Expense__c</tab>
+    <tab>Camping_Item__c</tab>
 </CustomApplication>

@@ -1,4 +1,4 @@
-<aura:component >
+<aura:component controller="CampingListController">
     
      <aura:attribute name="items" type="Camping_Item__c[]"/>
     
@@ -7,12 +7,15 @@
                                                                       , 'Price__c'   : 0
                                                                       , 'Packed__c' : false}"/>
 
-    <!-- NEW EXPENSE FORM -->
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+    <!-- NEW CAMPING FORM -->
     <div class="slds-col slds-col--padded slds-p-top--large">
 
 
   
-  <div aria-labelledby="newexpenseform">
+  <div aria-labelledby="newcampingform">
 
   <!-- BOXED AREA -->
   <fieldset class="slds-box slds-theme--default slds-container--small">
