@@ -1,0 +1,6 @@
+<aura:component controller="OpportunityAlertController"  implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	Test me; test me. {!v.recordId}  The End.
+    
+   
+    
+</aura:component>

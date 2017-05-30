@@ -1,0 +1,73 @@
+<aura:component controller="OpportunityAlertController" implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global">
+    <aura:attribute name="opportunities" type="Opportunity[]"/>
+    
+    <aura:attribute name="daysSinceLastModified" type="Integer" default="7"/>
+    <aura:attribute name="oppStage" type="String" default="Prospecting" />
+    <aura:attribute name="hasTasks" type="Boolean" default="true" />
+    <aura:attribute name="isSForce" type="Boolean" default="false" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.getOpps}" />
+
+<!--    <article class="forceCard"> -->
+    <article class="slds-card">
+
+      <div class="slds-card__header slds-grid">
+          <div class="slds-media__body">
+              <aura:if isTrue="{!v.isSForce}">
+                  <br/>SFORCE<br/>
+              <aura:set attribute="else">
+                  <br/>Not SFORCE<br/>
+              </aura:set>    
+              </aura:if>
+              <span class="slds-text-heading_small">
+                          These <b>{!v.oppStage}</b> opportunites have not been modified for <b><ui:outputNumber value="{!v.daysSinceLastModified}" /></b> days
+        <aura:if isTrue="{!v.hasTasks}"> and have open tasks</aura:if>.
+              </span>
+          </div>
+      </div>
+<!--
+    <div style="padding: 5px;">
+    <h2>Opportunity Alerts</h2>
+        These <b>{!v.oppStage}</b> opportunites have not been modified for <b><ui:outputNumber value="{!v.daysSinceLastModified}" /></b> days
+        <aura:if isTrue="{!v.hasTasks}"> and have open tasks</aura:if>.
+    </div> 
+-->
+<!--   <span class="card-body"> -->
+   <span class="slds-card__body slds-card__body_inner">
+
+     <div class="forceFilterList alert-div">
+        <UL class="light">
+        <aura:iteration var="opportunity" items="{!v.opportunities}">
+        	     <li class="light forceListRecord alert-li" >
+                       <div class="itemTitle body" id="{!opportunity.Id}" onclick="{!c.gotoRecord}">  
+                       <h3>{!opportunity.Name}</h3>
+                       <ul class="itemRows truncate">
+                           <li class="tableRowGroup">
+                               <div class="forceListRecordItem">
+                                   <div class="label recordCell truncate">Stage Name:</div>
+                                   <div class="value recordCell truncate" >
+                                       <ui:outputText value="{!opportunity.StageName}" />
+                                   </div>
+                               </div>
+                               <div class="forceListRecordItem">
+                                   <div class="label recordCell truncate">Last Modifed:</div>
+                                   <div class="value recordCell truncate" >
+                                       <ui:outputText value="{!opportunity.LastModifiedDate}" />
+                                   </div>
+                               </div>
+                               <div class="forceListRecordItem">
+                                   <div class="label recordCell truncate">Close Date:</div>
+                                   <div class="value recordCell truncate" >
+                                       <ui:outputText value="{!opportunity.CloseDate}" />
+                                   </div>
+                               </div>
+                           </li>
+                       </ul>
+                   </div>
+                </li>
+    	 </aura:iteration>
+         </UL>
+        </div>   
+    </span>
+    </article>
+</aura:component>
